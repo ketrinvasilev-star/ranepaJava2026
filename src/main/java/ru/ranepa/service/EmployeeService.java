@@ -2,18 +2,51 @@ package ru.ranepa.service;
 
 import ru.ranepa.model.Employee;
 import ru.ranepa.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EmployeeService {
 
     private final EmployeeRepository repository;
 
+    @Autowired
     public EmployeeService(EmployeeRepository repository) {
         this.repository = repository;
+    }
+
+    // сохранем сотрудника
+    public Employee save(Employee employee) {
+        return repository.save(employee);
+    }
+
+    // ищем по ID
+    public Optional<Employee> findById(Long id) {
+        return repository.findById(id);
+    }
+
+    // все сотрудники
+    public List<Employee> findAll() {
+        return repository.findAll();
+    }
+
+    // удаляем по ID
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    // ищем по должности
+    public List<Employee> findByPosition(String position) {
+        return repository.findByPosition(position);
+    }
+
+    // ищем с зарплатой больше или равной
+    public List<Employee> findBySalaryGreaterThanEqual(BigDecimal salary) {
+        return repository.findBySalaryGreaterThanEqual(salary);
     }
 
     // считаем среднюю зп
@@ -49,19 +82,4 @@ public class EmployeeService {
 
         return Optional.ofNullable(topSpender);
     }
-
-    // ищем всех сотрудников с должностью position
-    public List<Employee> filterByPosition(String position) {
-        List<Employee> result = new ArrayList<>();
-        Iterable<Employee> employees = repository.findAll();
-
-        for (Employee emp : employees) {
-            if (emp.getPosition().equalsIgnoreCase(position)) {
-                result.add(emp);
-            }
-        }
-
-        return result;
-    }
-
 }
