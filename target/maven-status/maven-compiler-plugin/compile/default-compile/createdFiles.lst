@@ -1,0 +1,8 @@
+ru/ranepa/repository/EmployeeRepository.class
+ru/ranepa/controller/EmployeeController.class
+ru/ranepa/model/Employee.class
+ru/ranepa/service/EmployeeService.class
+ru/ranepa/dto/EmployeeRequestDto.class
+ru/ranepa/dto/EmployeeResponseDto.class
+ru/ranepa/dto/EmployeeStatsDto.class
+ru/ranepa/HRMApplication.class

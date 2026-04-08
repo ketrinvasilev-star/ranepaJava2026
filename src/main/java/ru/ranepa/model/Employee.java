@@ -1,22 +1,45 @@
 package ru.ranepa.model;
+
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "employees")
 public class Employee {
     // описание полей
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "position", nullable = false)
     private String position;
+
+    @Column(name = "salary", nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;
+
+    @Column(name = "hire_date", nullable = false)
     private LocalDate hireDate;
 
+    public Employee() {
+    }
+
     // создание сотрудника
-    public Employee(LocalDate hireDate, double salary, String position, String name, Long id) {
-        this.id = id;
+    public Employee(LocalDate hireDate, double salary, String position, String name) {
         this.name = name;
         this.position = position;
         this.salary = BigDecimal.valueOf(salary);
         this.hireDate = hireDate;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (hireDate == null) {
+            hireDate = LocalDate.now();
+        }
     }
 
     // получить ID

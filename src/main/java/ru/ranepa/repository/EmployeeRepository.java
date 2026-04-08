@@ -1,12 +1,13 @@
 package ru.ranepa.repository;
 
 import ru.ranepa.model.Employee;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.math.BigDecimal;
+import java.util.List;
 
-// создание скелета БД
-public interface EmployeeRepository {
-    String save(Employee employee);
-    Optional<Employee> findById(long id);
-    Iterable<Employee> findAll();
-    String delete(long id);
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    
+    List<Employee> findByPosition(String position);
+    
+    List<Employee> findBySalaryGreaterThanEqual(BigDecimal salary);
 }
